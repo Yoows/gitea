@@ -1,0 +1,1 @@
+// handle message through rabbitmq
