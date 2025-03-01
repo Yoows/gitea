@@ -1,12 +1,25 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/ubuntu2204"
-  config.ssh.forward_agent = true
-
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = 2048  
-    vb.cpus = 1  
+  host_arch = `uname -m`.strip
+  puts "Hosted arch is: #{host_arch}"
+  
+  if host_arch == "arm64"
+    # Configuration for Mac M1/M2 (ARM64)
+    config.vm.box = "ubuntu/jammy64"
+    # Explicitly set provider to vmware_fusion or parallels for ARM64
+    config.vm.provider "vmware_desktop" do |v|
+      v.memory = 2048
+      v.cpus = 1
+    end
+  else
+    config.vm.box = "generic/ubuntu2204"
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      v.cpus = 1
+    end
   end
+  
 
+  
   # VM for API Billing
   config.vm.define "billing_vm" do |billing_vm|
     billing_vm.vm.hostname = "BillingVM"
@@ -14,25 +27,25 @@ Vagrant.configure("2") do |config|
     # This will run the setup-billing.sh (PostgreSQL, RabbitMQ, all dependencies needed)
     billing_vm.vm.provision "shell", path: "scripts/setup-billing.sh"
     # Sync billing-api folder with /apps/billing_api in the VM
-    billing_vm.vm.synced_folder "../billing-api", "/apps/billing_api",
-      type: "virtualbox"
+    billing_vm.vm.synced_folder "../billing-api", "/apps/billing-api",
+      type: host_arch == "x86_64" ? "virtualbox" : "nfs"
   end
-
+  
   # VM for API Gateway
   config.vm.define "gateway_vm" do |gateway_vm|
     gateway_vm.vm.hostname = "GatewayVM"
     gateway_vm.vm.network "private_network", ip: "192.168.6.26", hostname: true
     gateway_vm.vm.provision "shell", path: "scripts/setup-gateway.sh"
-    gateway_vm.vm.synced_folder "../api-gateway", "/apps/api_gateway",
-      type: "virtualbox"
+    gateway_vm.vm.synced_folder "../api-gateway", "/apps/api-gateway",
+      type: host_arch == "x86_64" ? "virtualbox" : "nfs"
   end
-
+  
   # VM for API Inventory
   config.vm.define "inventory_vm" do |inventory_vm|
     inventory_vm.vm.hostname = "InventoryVM"
     inventory_vm.vm.network "private_network", ip: "192.168.6.27", hostname: true
     inventory_vm.vm.provision "shell", path: "scripts/setup-inventory.sh"
-    inventory_vm.vm.synced_folder "../inventory-api", "/apps/inventory_api",
-      type: "virtualbox"
+    inventory_vm.vm.synced_folder "../inventory-api", "/apps/inventory-api",
+      type: host_arch == "x86_64" ? "virtualbox" : "nfs"
   end
 end
