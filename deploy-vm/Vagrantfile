@@ -18,6 +18,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "billing_vm" do |billing_vm|
     billing_vm.vm.hostname = "BillingVM"
     billing_vm.vm.network "private_network", ip: "192.168.6.25", hostname: true
+    billing_vm.vm.provider "virtualbox" do |vb|
+      vb.name = "Billing-VM"
+    end
     # This will run the setup-billing.sh (PostgreSQL, RabbitMQ, all dependencies needed)
     billing_vm.vm.provision "shell", path: "scripts/setup-billing.sh"
     # Sync billing-api folder with /apps/billing_api in the VM
@@ -28,6 +31,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "gateway_vm" do |gateway_vm|
     gateway_vm.vm.hostname = "GatewayVM"
     gateway_vm.vm.network "private_network", ip: "192.168.6.26", hostname: true
+    gateway_vm.vm.provider "virtualbox" do |vb|
+      vb.name = "API-Gateway-VM"
+    end
     gateway_vm.vm.provision "shell", path: "scripts/setup-gateway.sh"
     gateway_vm.vm.synced_folder "../api-gateway", "/apps/api-gateway"
   end
@@ -36,6 +42,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "inventory_vm" do |inventory_vm|
     inventory_vm.vm.hostname = "InventoryVM"
     inventory_vm.vm.network "private_network", ip: "192.168.6.27", hostname: true
+    inventory_vm.vm.provider "virtualbox" do |vb|
+      vb.name = "Inventory-VM"
+    end
     inventory_vm.vm.provision "shell", path: "scripts/setup-inventory.sh"
     inventory_vm.vm.synced_folder "../inventory-api", "/apps/inventory-api"
   end
