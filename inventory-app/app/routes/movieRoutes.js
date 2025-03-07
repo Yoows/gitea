@@ -1,7 +1,6 @@
 const express = require("express");
-const Product = require("../models/Movie");
 const Movie = require("../models/Movie");
-
+const { Op } = require("sequelize");
 const router = express.Router();
 
 // Get all movie
@@ -14,7 +13,7 @@ router.get("/", async (req, res) => {
             movies = await Movie.findAll({
                 where: {
                     title: {
-                        [Op.iLike]: `%${title}%`, // Recherche insensible à la casse
+                        [Op.iLike]: `%${String(title)}%`,
                     },
                 },
             });
@@ -24,7 +23,7 @@ router.get("/", async (req, res) => {
 
         res.json(movies);
     } catch (error) {
-        res.status(500).json({ error: "Error while retrieving movies" });
+        res.status(500).json({ error: error });
     }
 });
 
