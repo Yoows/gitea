@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
     inventory_vm.vm.provider "virtualbox" do |vb|
       vb.name = "Inventory-VM"
     end
-    inventory_vm.vm.provision "shell", path: "scripts/setup-inventory.sh"
-    inventory_vm.vm.synced_folder "./inventory-app", "/apps/inventory-app"
+    inventory_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-inventory.sh"
+    inventory_vm.vm.synced_folder "./inventory-api", "/apps/inventory-api"
   end
 end
