@@ -20,6 +20,6 @@ CREATE TABLE IF NOT EXISTS orders (
     total_amount DECIMAL(10, 2) NOT NULL
 );"
 
-cd /apps/billing-api
+cd /apps/billing-app
 sudo npm install
 sudo node server.js
