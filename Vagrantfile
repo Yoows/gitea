@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   # VM for API Billing
   config.vm.define "billing_vm" do |billing_vm|
     billing_vm.vm.hostname = "BillingVM"
-    billing_vm.vm.network "private_network", ip: "11.11.90.200", hostname: true
+    billing_vm.vm.network "private_network", ip: "192.168.6.200", hostname: true
     billing_vm.vm.provider "virtualbox" do |vb|
       vb.name = "billing-vm"
     end
@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
   # VM for API Inventory
   config.vm.define "inventory_vm" do |inventory_vm|
     inventory_vm.vm.hostname = "InventoryVM"
-    inventory_vm.vm.network "private_network", ip: "192.168.6.27", hostname: true
+    inventory_vm.vm.network "private_network", ip: "192.168.6.202", hostname: true
     inventory_vm.vm.provider "virtualbox" do |vb|
       vb.name = "inventory-vm"
     end
