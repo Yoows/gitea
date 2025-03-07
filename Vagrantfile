@@ -15,17 +15,20 @@ Vagrant.configure("2") do |config|
   end
   
   # VM for API Billing
-  # config.vm.define "billing_vm" do |billing_vm|
-  #   billing_vm.vm.hostname = "BillingVM"
-  #   billing_vm.vm.network "private_network", ip: "192.168.6.25", hostname: true
-  #   billing_vm.vm.provider "virtualbox" do |vb|
-  #     vb.name = "Billing-VM"
-  #   end
-  #   # This will run the setup-billing.sh (PostgreSQL, RabbitMQ, all dependencies needed)
-  #   billing_vm.vm.provision "shell", path: "scripts/setup-billing.sh"
-  #   # Sync billing-api folder with /apps/billing_api in the VM
-  #   billing_vm.vm.synced_folder "../billing-api", "/apps/billing-api"
-  # end
+  config.vm.define "billing_vm" do |billing_vm|
+    billing_vm.vm.hostname = "BillingVM"
+    billing_vm.vm.network "private_network", ip: "11.11.90.200", hostname: true
+    billing_vm.vm.provider "virtualbox" do |vb|
+      vb.name = "Billing-VM"
+    end
+    # This will run the setup-billing.sh (PostgreSQL, RabbitMQ, all dependencies needed)
+    billing_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-billing.sh"
+    
+    # Sync billing-api folder with /apps/billing_api in the VM (one-way sync)
+    billing_vm.vm.synced_folder "../billing-api", "/apps/billing-api", type: "rsync",
+      rsync__exclude: "./node_modules"
+  end
+
   
   # VM for API Gateway
   # config.vm.define "gateway_vm" do |gateway_vm|
@@ -34,7 +37,7 @@ Vagrant.configure("2") do |config|
   #   gateway_vm.vm.provider "virtualbox" do |vb|
   #     vb.name = "API-Gateway-VM"
   #   end
-  #   gateway_vm.vm.provision "shell", path: "scripts/setup-gateway.sh"
+  #   gateway_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-gateway.sh"
   #   gateway_vm.vm.synced_folder "../api-gateway", "/apps/api-gateway"
   # end
   
@@ -46,6 +49,7 @@ Vagrant.configure("2") do |config|
       vb.name = "Inventory-VM"
     end
     inventory_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-inventory.sh"
-    inventory_vm.vm.synced_folder "./inventory-api", "/apps/inventory-api"
+    inventory_vm.vm.synced_folder "./inventory-api", "/apps/inventory-api", type: "rsync",
+      rsync__exclude: "./node_modules"
   end
 end

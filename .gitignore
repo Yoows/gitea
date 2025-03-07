@@ -8,3 +8,5 @@ deploy-vm/.vagrant
 deploy-vm/billing-app
 deploy-vm/api-gateway
 deploy-vm/inventory-api
+*node_modules
+*node_modules*
