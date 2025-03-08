@@ -10,3 +10,5 @@ deploy-vm/api-gateway
 deploy-vm/inventory-api
 *node_modules
 *node_modules*
+*/package-lock.json
+*/package-lock.json*
