@@ -25,15 +25,15 @@ Vagrant.configure("2") do |config|
 
   
   # VM for API Gateway
-  # config.vm.define "gateway_vm" do |gateway_vm|
-  #   gateway_vm.vm.hostname = "GatewayVM"
-  #   gateway_vm.vm.network "private_network", ip: "192.168.6.26", hostname: true
-  #   gateway_vm.vm.provider "virtualbox" do |vb|
-  #     vb.name = "gateway-vm"
-  #   end
-  #   gateway_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-gateway.sh"
-  #   gateway_vm.vm.synced_folder "./api-gateway", "/apps/api-gateway"
-  # end
+  config.vm.define "gateway_vm" do |gateway_vm|
+    gateway_vm.vm.hostname = "GatewayVM"
+    gateway_vm.vm.network "private_network", ip: "192.168.6.26", hostname: true
+    gateway_vm.vm.provider "virtualbox" do |vb|
+      vb.name = "gateway-vm"
+    end
+    gateway_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-gateway.sh"
+    gateway_vm.vm.synced_folder "./api-gateway", "/apps/api-gateway"
+  end
   
   # VM for API Inventory
   config.vm.define "inventory_vm" do |inventory_vm|
