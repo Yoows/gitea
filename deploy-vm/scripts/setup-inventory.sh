@@ -7,6 +7,7 @@ sudo -u postgres psql -c "create user inventory with encrypted password 'invento
 sudo -u postgres psql -c "ALTER ROLE inventory SUPERUSER;"
 sudo -u postgres psql -c "grant all privileges on database movies_db to inventory ;"
 cd /apps/inventory-app
+sudo npm install pm2 -g
 sudo npm install
 sudo node app/models/sync.js 
-sudo node server.js
+sudo pm2 start server.js

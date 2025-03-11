@@ -8,10 +8,21 @@ Vagrant.configure("2") do |config|
     vb.cpus = 1
   end
 
+    # VM for API Gateway
+    config.vm.define "gateway_vm" do |gateway_vm|
+      gateway_vm.vm.hostname = "GatewayVM"
+      gateway_vm.vm.network "private_network", ip: "192.168.6.200", hostname: true
+      gateway_vm.vm.provider "virtualbox" do |vb|
+        vb.name = "gateway-vm"
+      end
+      gateway_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-gateway.sh"
+      gateway_vm.vm.synced_folder "./api-gateway", "/apps/api-gateway"
+    end
+
   # VM for API Billing
   config.vm.define "billing_vm" do |billing_vm|
     billing_vm.vm.hostname = "BillingVM"
-    billing_vm.vm.network "private_network", ip: "192.168.6.200", hostname: true
+    billing_vm.vm.network "private_network", ip: "192.168.6.201", hostname: true
     billing_vm.vm.provider "virtualbox" do |vb|
       vb.name = "billing-vm"
     end
@@ -22,18 +33,6 @@ Vagrant.configure("2") do |config|
     billing_vm.vm.synced_folder "./billing-app", "/apps/billing-app", type: "rsync",
       rsync__exclude: "./node_modules"
   end
-
-  
-  # VM for API Gateway
-  # config.vm.define "gateway_vm" do |gateway_vm|
-  #   gateway_vm.vm.hostname = "GatewayVM"
-  #   gateway_vm.vm.network "private_network", ip: "192.168.6.26", hostname: true
-  #   gateway_vm.vm.provider "virtualbox" do |vb|
-  #     vb.name = "gateway-vm"
-  #   end
-  #   gateway_vm.vm.provision "shell", path: "deploy-vm/scripts/setup-gateway.sh"
-  #   gateway_vm.vm.synced_folder "./api-gateway", "/apps/api-gateway"
-  # end
   
   # VM for API Inventory
   config.vm.define "inventory_vm" do |inventory_vm|

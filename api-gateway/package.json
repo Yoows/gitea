@@ -11,10 +11,12 @@
   "description": "",
   "dependencies": {
     "amqplib": "^0.10.5",
-    "axios": "1.8.2",
+    "axios": "^1.8.2",
     "dotenv": "^16.4.7",
     "express": "5.0.1",
     "http-proxy-middleware": "^3.0.3",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

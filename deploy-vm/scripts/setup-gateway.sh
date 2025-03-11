@@ -7,5 +7,6 @@ sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
 
 cd /apps/api-gateway
+sudo npm install pm2 -g
 sudo npm install
-sudo node server.js
+sudo pm2 start server.js

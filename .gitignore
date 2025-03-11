@@ -12,3 +12,4 @@ deploy-vm/inventory-api
 *node_modules*
 */package-lock.json
 */package-lock.json*
+package-lock.json

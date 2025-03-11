@@ -6,6 +6,13 @@ sudo systemctl start postgresql
 sudo systemctl enable postgresql
 sudo systemctl start rabbitmq-server
 sudo systemctl enable rabbitmq-server
+sudo rabbitmq-plugins enable rabbitmq_management
+
+sudo rabbitmqctl add_user admin admin
+sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+sudo rabbitmqctl set_user_tags admin administrator
+sudo systemctl restart rabbitmq-server
+
 
 sudo -u postgres psql -c "CREATE DATABASE billing_db;"
 sudo -u postgres psql -c "CREATE USER billing WITH ENCRYPTED PASSWORD 'billing';"
@@ -21,5 +28,6 @@ CREATE TABLE IF NOT EXISTS orders (
 );"
 
 cd /apps/billing-app
+sudo npm install pm2 -g
 sudo npm install
-sudo node server.js
+sudo pm2 start server.js
