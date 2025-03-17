@@ -1,0 +1,199 @@
+openapi: 3.0.0
+info:
+  title: "🚀 API Gateway for Microservices"
+  version: "1.0.0"
+  description: |
+    🌐 **Welcome to the API Gateway**  
+    This gateway centralizes requests to multiple microservices to ensure smooth communication between them.  
+
+    🔥 **Available Microservices**  
+    - 🧾 **Billing Service** → Manage billing operations via `/api/billing`
+    
+    - 🎬 **Movies Service** → Manage the movie list via `/api/movies`
+    
+paths:
+  /api/billing:
+    post:
+      summary: "Send a billing request to RabbitMQ"
+      tags:
+        - Billing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+                - number_of_items
+                - total_amount
+              properties:
+                user_id:
+                  type: string
+                  description: "User ID"
+                number_of_items:
+                  type: integer
+                  description: "Number of purchased items"
+                total_amount:
+                  type: number
+                  description: "Total amount to be paid"
+      responses:
+        200:
+          description: "Billing request successfully sent"
+        400:
+          description: "Missing data in request"
+
+  /api/movies:
+    get:
+      summary: "Retrieve the list of movies"
+      tags:
+        - Movies
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: "Filter movies by title (case-insensitive)"
+      responses:
+        200:
+          description: "List of movies"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Movie"
+    delete:
+      summary: "Delete all movies"
+      tags:
+        - Movies
+      responses:
+        204:
+          description: "Movies successfully deleted"
+        500:
+          description: "Error while deleting the movies"
+
+    post:
+      summary: "Add a new movie"
+      tags:
+        - Movies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+      responses:
+        201:
+          description: "Movie successfully created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        400:
+          description: "Error while creating the movie"
+
+  /api/movies/{id}:
+    get:
+      summary: "Retrieve a movie by ID"
+      tags:
+        - Movies
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: "Movie ID"
+      responses:
+        200:
+          description: "Movie details"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        404:
+          description: "Movie not found"
+
+    put:
+      summary: "Update a movie"
+      tags:
+        - Movies
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: "Movie ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+      responses:
+        200:
+          description: "Movie successfully updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        404:
+          description: "Movie not found"
+        400:
+          description: "Error while updating the movie"
+
+    delete:
+      summary: "Delete a movie by ID"
+      tags:
+        - Movies
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: "Movie ID"
+      responses:
+        204:
+          description: "Movie successfully deleted"
+        404:
+          description: "Movie not found"
+        500:
+          description: "Error while deleting the movie"
+
+
+components:
+  schemas:
+    Movie:
+      type: object
+      required:
+        - title
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: "Unique identifier for the movie"
+        title:
+          type: string
+          description: "Movie title"
+        description:
+          type: string
+          description: "Movie description"
+      example:
+        id: "550e8400-e29b-41d4-a716-446655440000"
+        title: "Inception"
+        description: "A science-fiction film directed by Christopher Nolan"

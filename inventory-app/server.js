@@ -1,12 +1,10 @@
 const express = require("express");
 const sequelize = require("./app/config/database");
-const movieRoutes = require("./app/routes/movieRoutes"); // Mise à jour du nom du fichier
-const swaggerDocs = require("./app/config/swagger");
+const movieRoutes = require("./app/routes/movieRoutes");
 
 require("dotenv").config();
 
 const app = express();
-swaggerDocs(app);
 app.use(express.json());
 
 app.use("/api/movies", movieRoutes);

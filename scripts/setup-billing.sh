@@ -12,14 +12,14 @@ sudo rabbitmqctl add_user admin admin
 sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
 sudo rabbitmqctl set_user_tags admin administrator
 sudo systemctl restart rabbitmq-server
+sudo npm install pm2 -g
 
-
-sudo -u postgres psql -c "CREATE DATABASE billing_db;"
+sudo -u postgres psql -c "CREATE DATABASE orders;"
 sudo -u postgres psql -c "CREATE USER billing WITH ENCRYPTED PASSWORD 'billing';"
 sudo -u postgres psql -c "ALTER ROLE billing SUPERUSER;"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE billing_db TO billing;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE orders TO billing;"
 
-sudo -u postgres psql -d billing_db -c "
+sudo -u postgres psql -d orders -c "
 CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );"
 
 cd /apps/billing-app
-sudo npm install pm2 -g
+
 sudo npm install
-sudo pm2 start server.js
+sudo pm2 start server.js -n billing_app
+
