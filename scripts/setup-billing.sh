@@ -1,4 +1,9 @@
 #!/bin/bash
+echo "export POSTGRES_URL=${POSTGRES_URL}" >> /etc/profile
+echo "export RABBITMQ_URL=${RABBITMQ_URL}" >> /etc/profile
+echo "export BILLING_QUEUE=${BILLING_QUEUE}" >> /etc/profile
+echo "export PORT=${PORT}" >> /etc/profile
+
 sudo apt-get update -y
 sudo apt-get install -y nodejs npm postgresql rabbitmq-server
 
@@ -30,5 +35,5 @@ CREATE TABLE IF NOT EXISTS orders (
 cd /apps/billing-app
 
 sudo npm install
-sudo pm2 start server.js -n billing_app
+pm2 start server.js -n billing_app
 

@@ -44,11 +44,6 @@ inventory_service_url = "http://#{inventory_vm_ip}:#{inventory_app_port}"
 
 Vagrant.configure("2") do |config|
 
-  host_arch = `uname -m`.strip
-  puts "#{gateway_vm_ip}"
-  puts "#{inventory_vm_ip}"
-  puts "Hosted arch is: #{host_arch}"
-  
   config.vm.box = "bento/ubuntu-24.04"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 1024

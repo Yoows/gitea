@@ -84,6 +84,9 @@ router.delete("/:id", async (req, res) => {
 router.delete("/", async (_req, res) => {
 	try {
 		await Movie.destroy({ where: {} });
+		res.status(200).json({
+			message: `All movies has been deleted successfully.`,
+		});
 	} catch (error) {
 		res.status(500).json({ error: "Error while deleting all movies" });
 		res.status(200).json({

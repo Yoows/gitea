@@ -39,6 +39,7 @@ app.use(
 app.listen(PORT, () => {
 	console.log(`API Gateway running on http://localhost:${PORT}`);
 	console.log(`Swagger running on http://localhost:${PORT}/api/docs`);
+	console.log(`${process.env.INVENTORY_SERVICE_URL}`)
 });
 
 async function sendToQueue(message) {
