@@ -14,6 +14,9 @@ const Movie = sequelize.define("Movie", {
     description: {
         type: DataTypes.TEXT,
     },
+}, {
+    tableName: "movies",
+    freezeTableName: true,
 });
 
 module.exports = Movie;

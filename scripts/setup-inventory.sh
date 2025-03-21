@@ -13,5 +13,5 @@ sudo -u postgres psql -c "ALTER ROLE inventory SUPERUSER;"
 sudo -u postgres psql -c "grant all privileges on database ${DB_NAME} to inventory ;"
 cd /apps/inventory-app
 sudo npm install
- 
+node app/models/sync.js
 pm2 start server.js
