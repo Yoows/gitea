@@ -27,13 +27,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/api/inventory",
+					"raw": "{{base_url}}/api/movies",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
-						"inventory"
+						"movies"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -46,13 +46,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/api/inventory/{{id}}",
+					"raw": "{{base_url}}/api/movies/{{id}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
-						"inventory",
+						"movies",
 						"{{id}}"
 					]
 				}
@@ -81,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"Harry Potter\",\n    \"description\": \"Harry Potter [ʔaʁi pɔtœʁ] est une série littéraire de low fantasy écrite par l'auteure britannique J. K. Rowling, dont la suite romanesque s'est achevée en 2007. Une pièce de théâtre, considérée comme la « huitième histoire,officielle, a été jouée et publiée en 2016\"\n}",
+					"raw": "{\n  \"title\": \"A new movie\",\n  \"description\": \"Very short description\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -89,13 +89,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/api/inventory",
+					"raw": "{{base_url}}/api/movies",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
-						"inventory"
+						"movies"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -132,13 +132,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/api/inventory/{{id}}",
+					"raw": "{{base_url}}/api/movies/{{id}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
-						"inventory",
+						"movies",
 						"{{id}}"
 					]
 				},
@@ -176,13 +176,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/api/inventory/{{id}}",
+					"raw": "{{base_url}}/api/movies/{{id}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
-						"inventory",
+						"movies",
 						"{{id}}"
 					]
 				},
@@ -196,13 +196,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/api/inventory",
+					"raw": "{{base_url}}/api/movies",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
-						"inventory"
+						"movies"
 					]
 				}
 			},
@@ -215,7 +215,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"user_id\": \"20\",\n  \"number_of_items\": \"99\",\n  \"total_amount\": \"250\"\n}\n",
+					"raw": "{\n  \"user_id\": \"22\",\n  \"number_of_items\": \"10\",\n  \"total_amount\": \"500\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
