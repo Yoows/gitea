@@ -52,18 +52,18 @@ This project implements a microservices architecture with three main components:
 
 #### Movies
 
-- **GET /api/inventory**: Retrieve all movies
-- **GET /api/inventory/:id**: Retrieve a movie by ID
-- **POST /api/inventory**: Create a new movie
+- **GET /api/movies**: Retrieve all movies
+- **GET /api/movies/:id**: Retrieve a movie by ID
+- **POST /api/movies**: Create a new movie
   ```json
   {
     "title": "The Matrix",
     "description": "A computer hacker learns about the true nature of reality",
   }
   ```
-- **PUT /api/inventory/:id**: Update a movie
-- **DELETE /api/inventory**: Delete all movies
-- **DELETE /api/inventory/:id**: Delete a movie
+- **PUT /api/movies/:id**: Update a movie
+- **DELETE /api/movies**: Delete all movies
+- **DELETE /api/movies/:id**: Delete a movie
 
 
 #### Billing
